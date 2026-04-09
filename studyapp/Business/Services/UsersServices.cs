@@ -27,7 +27,7 @@ namespace studyapp.Business.Services
                 };
             }
             User newuser = new User()
-            {
+            {   Name=user.Name,
                 CreatedTime = DateTime.UtcNow,
                 IsActive = false,
                 IsReview = false,
