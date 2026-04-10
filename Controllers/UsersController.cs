@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using studyapp.Business.IServices;
-using studyapp.Data;
 using studyapp.Models;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace studyapp.Controllers
 {
@@ -79,6 +77,20 @@ namespace studyapp.Controllers
             try
             {
                 var result = await _userservice.SendOTP(Mail);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllUsers")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            try
+            {
+                var result = await _userservice.GetAllUsers();
                 return Ok(result);
             }
             catch (Exception ex)

@@ -184,5 +184,16 @@ namespace studyapp.Business.Services
             };
 
         }
+
+        public async Task<ResponseVM> GetAllUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+            return new ResponseVM()
+            {
+                status = 1,
+                data = users
+            };
+
+        }
     }
 }
