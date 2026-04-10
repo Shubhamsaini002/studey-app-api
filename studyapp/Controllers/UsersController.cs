@@ -29,5 +29,19 @@ namespace studyapp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("OtpVerification")]
+        public async Task<IActionResult> OtpVerification(string Mail,string code)
+        {
+            try
+            {
+                var result = await _userservice.OtpVerification( Mail, code);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

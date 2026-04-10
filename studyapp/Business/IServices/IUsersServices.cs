@@ -8,5 +8,7 @@ namespace studyapp.Business.IServices
     {
         Task<singupResponseVM> Signup(signupRequestVM user);
 
+        Task<ResponseVM> OtpVerification(string Mail, string code);
+
     }
 }
