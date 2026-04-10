@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using studyapp.Business.IServices;
 using studyapp.Data;
 using studyapp.Models;
+using static System.Net.WebRequestMethods;
 
 namespace studyapp.Business.Services
 {
@@ -76,6 +77,10 @@ namespace studyapp.Business.Services
                     Message = "Invalid OTP!",
                 };
             }
+            
+            existingUser.IsActive =true;
+            _context.Users.Update(existingUser);
+            await _context.SaveChangesAsync();
             return new ResponseVM()
             {
                 status = 1,
@@ -86,7 +91,7 @@ namespace studyapp.Business.Services
                     Name=existingUser.Name,
                     Email=existingUser.Email,
                     JobTitle=existingUser.JobTitle,
-                    IsActive=existingUser.IsActive,
+                    IsActive=true,
                     IsReview=existingUser.IsReview,
                 }
             };
