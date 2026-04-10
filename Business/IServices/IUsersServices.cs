@@ -13,7 +13,7 @@ namespace studyapp.Business.IServices
 
         Task<ResponseVM> ForgetPassword(string Mail, string code, string password);
 
-        Task<ResponseVM> SendOTP(string Mail);
+        Task<ResponseVM> SendOTP(string Mail ,bool type);
         Task<ResponseVM> GetAllUsers();
     }
 }

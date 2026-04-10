@@ -29,7 +29,7 @@ namespace studyapp.Controllers
             }
         }
 
-        [HttpPost("login")]
+        [HttpGet("login")]
         public async Task<IActionResult> login(string Email, string Password)
         {
             try
@@ -43,12 +43,12 @@ namespace studyapp.Controllers
             }
         }
 
-        [HttpPost("ForgetPassword")]
-        public async Task<IActionResult> ForgetPassword(string Mail, string code, string password)
+        [HttpGet("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(string email, string code, string password)
         {
             try
             {
-                var result = await _userservice.ForgetPassword( Mail,  code, password);
+                var result = await _userservice.ForgetPassword( email,  code, password);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -58,11 +58,11 @@ namespace studyapp.Controllers
         }
 
         [HttpGet("OtpVerification")]
-        public async Task<IActionResult> OtpVerification(string Mail,string code)
+        public async Task<IActionResult> OtpVerification(string Email,string code)
         {
             try
             {
-                var result = await _userservice.OtpVerification( Mail, code);
+                var result = await _userservice.OtpVerification( Email, code);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -71,12 +71,12 @@ namespace studyapp.Controllers
             }
         }
 
-        [HttpGet("ResendOTP")]
-        public async Task<IActionResult> ResendOTP(string Mail)
+        [HttpPost("ResendOTP")]
+        public async Task<IActionResult> ResendOTP(SendOtpRequest data)
         {
             try
             {
-                var result = await _userservice.SendOTP(Mail);
+                var result = await _userservice.SendOTP(data.Email, data.type);
                 return Ok(result);
             }
             catch (Exception ex)

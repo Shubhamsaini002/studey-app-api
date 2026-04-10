@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using studyapp.Business.IServices;
 using studyapp.Data;
 using studyapp.Models;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
-using static System.Net.WebRequestMethods;
 
 namespace studyapp.Business.Services
 {
@@ -161,7 +159,7 @@ namespace studyapp.Business.Services
         }
 
 
-        public async Task<ResponseVM> SendOTP(string Mail)
+        public async Task<ResponseVM> SendOTP(string Mail,bool type)
         {
             var existingUser = await _context.Users.FirstOrDefaultAsync(x => x.Email == Mail);
             if (existingUser == null)
@@ -175,11 +173,12 @@ namespace studyapp.Business.Services
             var random = new Random();
             int otp = random.Next(100000, 1000000);
             existingUser.VerificationCode = otp.ToString();
+            await _sendMail.SendOtpEmailAsync(Mail,"Verification OTP", otp.ToString(), type);
             _context.Users.Update(existingUser);
             await _context.SaveChangesAsync();
             return new ResponseVM()
             {
-                status = 0,
+                status = 1,
                 Message = "OTP has sent to your Email Account.",
             };
 
