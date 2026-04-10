@@ -11,14 +11,13 @@ using studyapp.Data;
 namespace studyapp.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260409204225_CreateUsersTable")]
+    [Migration("20260410085214_CreateUsersTable")]
     partial class CreateUsersTable
     {
-        /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "10.0.5");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
             modelBuilder.Entity("studyapp.Data.User", b =>
                 {

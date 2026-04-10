@@ -27,10 +27,11 @@ bld/
 project.lock.json
 project.fragment.lock.json
 artifacts/
-.vs
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
-
+.vs
+.vs/
 # NuGet Packages
 *.nupkg
 # NuGet Symbol Packages
@@ -52,5 +53,3 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
-/studyapp/studyapp.db-shm
-/studyapp/studyapp.db-wal
