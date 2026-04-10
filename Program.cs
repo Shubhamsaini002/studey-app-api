@@ -38,7 +38,7 @@ builder.Services.AddCors(options =>
 // DI Services
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<ISendMail, SendMail>();
-
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
