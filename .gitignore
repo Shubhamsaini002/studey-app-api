@@ -52,3 +52,5 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/studyapp/studyapp.db-shm
+/studyapp/studyapp.db-wal
