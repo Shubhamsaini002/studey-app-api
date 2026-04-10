@@ -189,7 +189,7 @@ namespace studyapp.Business.Services
         {
             var users = await _context.Users.ToListAsync();
             return new ResponseVM()
-            {
+            {   
                 status = 1,
                 data = users
             };
