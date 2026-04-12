@@ -85,12 +85,12 @@ namespace studyapp.Controllers
             }
         }
 
-        [HttpGet("GetAllUsers")]
-        public async Task<IActionResult> GetAllUsers()
+        [HttpGet("Notification")]
+        public async Task<IActionResult> Notification()
         {
             try
             {
-                var result = await _userservice.GetAllUsers();
+                var result = await _userservice.Notification();
                 return Ok(result);
             }
             catch (Exception ex)

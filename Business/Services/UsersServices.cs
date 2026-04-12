@@ -184,9 +184,9 @@ namespace studyapp.Business.Services
 
         }
 
-        public async Task<ResponseVM> GetAllUsers()
+        public async Task<ResponseVM> Notification()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Notification.FirstOrDefaultAsync();
             return new ResponseVM()
             {   
                 status = 1,
