@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using studyapp.Business.IServices;
 using studyapp.Business.Services;
@@ -39,6 +40,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<IUsersServices, UsersServices>();
 builder.Services.AddScoped<ISendMail, SendMail>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
