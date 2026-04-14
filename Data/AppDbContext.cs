@@ -10,6 +10,7 @@ namespace studyapp.Data
         public DbSet<Course> Courses { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<UserQuestionStatus> UserQuestionStatuses { get; set; }
+        public DbSet<HelpRequest> HelpRequests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // 🔥 Unique constraint (VERY IMPORTANT)
