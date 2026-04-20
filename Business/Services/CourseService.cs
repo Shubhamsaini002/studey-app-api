@@ -138,8 +138,8 @@ namespace studyapp.Business.Services
             catch (Exception ex) {
                 return new ResponseVM()
                 {
-                    status = 1,
-                    Message = ex.Message,
+                    status = 0,
+                    Message = ex.InnerException?.Message ?? ex.Message,
                 };
             }
         }

@@ -9,6 +9,8 @@
 
         public bool IsActive { get; set; } = true;
 
+        public string? Image { get; set; }
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public List<Question> Questions { get; set; }
