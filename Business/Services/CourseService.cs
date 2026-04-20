@@ -53,6 +53,8 @@ namespace studyapp.Business.Services
 
         }
 
+       
+
         public async Task<ResponseVM> MarkAsRead(int userId, int questionId)
         {
             var item = await _context.UserQuestionStatuses
@@ -110,5 +112,37 @@ namespace studyapp.Business.Services
                 Message = "Saved."
             };
         }
+
+        public async Task<ResponseVM> insertquestions(InsertQuestion data)
+        {
+            Question record = new Question()
+            {
+                CourseId = data.CourseId,
+                QuestionText = data.QuestionText,
+                AnswerText = data.AnswerText,
+                IsActive = true,
+                CreatedAt = DateTime.UtcNow,
+                Level = data.Level,
+            };
+
+            try
+            {
+                _context.Questions.Add(record);
+                await _context.SaveChangesAsync();
+                return new ResponseVM()
+                {
+                    status = 1,
+                    Message = "added.."
+                };
+            }
+            catch (Exception ex) {
+                return new ResponseVM()
+                {
+                    status = 1,
+                    Message = ex.Message,
+                };
+            }
+        }
+
     }
 }

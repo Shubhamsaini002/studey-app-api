@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using studyapp.Business.IServices;
+using studyapp.Models;
 
 namespace studyapp.Controllers
 {
@@ -72,5 +73,13 @@ namespace studyapp.Controllers
         //        Progress = progress
         //    });
         //}
+
+        [HttpPost("insertquestions")]
+        public async Task<IActionResult> insertquestions(InsertQuestion data)
+        {
+            var result = await _courseService.insertquestions(data);
+
+            return Ok(result);
+        }
     }
 }
