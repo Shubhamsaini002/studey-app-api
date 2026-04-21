@@ -33,9 +33,8 @@ namespace studyapp.Business.Services
            into gj
            from sub in gj.DefaultIfEmpty()
 
-           where q.CourseId == courseId
-
-       select new
+           where q.CourseId == courseId && q.Level == level
+           select new
        {
            q.Id,
            Question = q.QuestionText,

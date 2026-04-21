@@ -15,14 +15,14 @@ namespace studyapp.Controllers
             _courseService = courseService;
         }
 
-        [HttpPost("getcourses")]
+        [HttpGet("getcourses")]
         public async Task<IActionResult> GetCourses()
         {
             var result = await _courseService.getCourses();
             return Ok(result);
         }
 
-        [HttpPost("getquestions")]
+        [HttpGet("getquestions")]
         public async Task<IActionResult> GetQuestions(
          int userId,
          int courseId,
@@ -34,7 +34,7 @@ namespace studyapp.Controllers
         }
 
         // ✅ 2. Mark as Read
-        [HttpPost("markread")]
+        [HttpGet("markread")]
         public async Task<IActionResult> MarkAsRead(int userId, int questionId)
         {
             var result=await _courseService.MarkAsRead(userId, questionId);
@@ -43,7 +43,7 @@ namespace studyapp.Controllers
         }
 
         // ✅ 3. Toggle Save
-        [HttpPost("savequestion")]
+        [HttpGet("savequestion")]
         public async Task<IActionResult> SaveQuestion(int userId, int questionId)
         {
             var result= await _courseService.SaveQuestion(userId, questionId);
