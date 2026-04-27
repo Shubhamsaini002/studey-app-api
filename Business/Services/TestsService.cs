@@ -17,59 +17,65 @@ namespace studyapp.Business.Services
         public async Task<ResponseVM> Dashboard(int userId)
         {
             var totalTests = await _context.Tests
-       .Where(t => t.IsActive)
-       .CountAsync();
+        .Where(x => x.IsActive)
+        .CountAsync();
 
-            // 🔹 User test attempts
+            // 🔹 User attempts (include relations)
             var userTests = await _context.UserTests
                 .Where(x => x.UserId == userId)
+                .Include(x => x.Test)
+                .ThenInclude(t => t.Course)
                 .ToListAsync();
 
-            var completedTests = userTests.Count;
-            var pendingTests = totalTests - completedTests;
+            // 🔥 BEST attempt per test (IMPORTANT)
+            var bestAttempts = userTests
+                .GroupBy(x => x.TestId)
+                .Select(g => g.OrderByDescending(x => x.Score).First())
+                .ToList();
 
-            // 🔹 Scores
-            var avgScore = completedTests == 0 ? 0 :
-                (int)userTests.Average(x => x.Score);
+            int completedTests = bestAttempts.Count;
+            int pendingTests = totalTests - completedTests;
 
-            var bestScore = completedTests == 0 ? 0 :
-                userTests.Max(x => x.Score);
+            // 🔹 Score calculations
+            int totalQuestions = bestAttempts.Sum(x => x.TotalQuestions);
+            int totalCorrect = bestAttempts.Sum(x => x.Score);
 
-            // 🔹 Total questions attempted
-            var totalQuestionsAttempted = userTests.Sum(x => x.TotalQuestions);
+            int accuracy = totalQuestions == 0 ? 0 :
+                (int)Math.Round((double)totalCorrect / totalQuestions * 100);
 
-            // 🔹 Accuracy %
-            var totalCorrect = userTests.Sum(x => x.Score);
+            int avgScore = completedTests == 0 ? 0 :
+                (int)Math.Round(bestAttempts.Average(x => x.Score));
 
-            var accuracy = totalQuestionsAttempted == 0 ? 0 :
-                (int)((double)totalCorrect / totalQuestionsAttempted * 100);
+            int bestScore = completedTests == 0 ? 0 :
+                bestAttempts.Max(x => x.Score);
 
-            // 🔹 Recent 5 attempts
-            var recentTests = await _context.UserTests
-                .Where(x => x.UserId == userId)
-                .OrderByDescending(x => x.CompletedAt)
-                .Take(5)
-                .Select(x => new
-                {
-                    x.TestId,
-                    TestName = x.Test.Title,
-                    x.Score,
-                    x.TotalQuestions,
-                    x.CompletedAt
-                })
-                .ToListAsync();
-
-            // 🔹 Course-wise performance (🔥 premium feature)
-            var courseStats = await _context.UserTests
-                .Where(x => x.UserId == userId)
+            // 🔥 Course performance
+            var courseStats = bestAttempts
                 .GroupBy(x => x.Test.Course.Name)
                 .Select(g => new
                 {
                     courseName = g.Key,
-                    tests = g.Count(),
-                    avgScore = g.Average(x => x.Score)
+                    avgScore = (int)Math.Round(g.Average(x => x.Score))
                 })
-                .ToListAsync();
+                .OrderByDescending(x => x.avgScore)
+                .ToList();
+
+            // 🔥 Weak course (lowest avg)
+            var weakCourse = courseStats
+                .OrderBy(x => x.avgScore)
+                .FirstOrDefault();
+
+            // 🔥 Recent activity (latest attempts, NOT best)
+            var recent = userTests
+                .OrderByDescending(x => x.CompletedAt)
+                .Take(5)
+                .Select(x => new
+                {
+                    testName = x.Test.Title,
+                    score = x.Score,
+                    total = x.TotalQuestions
+                })
+                .ToList();
 
             return new ResponseVM()
             {
@@ -79,15 +85,12 @@ namespace studyapp.Business.Services
                     totalTests,
                     completedTests,
                     pendingTests,
-
                     avgScore,
                     bestScore,
-
-                    totalQuestionsAttempted,
                     accuracy,
-
-                    recentTests,
-                    courseStats
+                    weakCourse,
+                    courseStats,
+                    recent
                 }
             };
         }
