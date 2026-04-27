@@ -7,5 +7,6 @@ namespace studyapp.Business.IServices
         Task<ResponseVM> GetAllTest(int userId);
         Task<ResponseVM> GetTestQuestions(int testId);
         Task<ResponseVM> SubmitTest(SubmitTestRequest request);
+        Task<ResponseVM> Dashboard(int userId);
     }
 }

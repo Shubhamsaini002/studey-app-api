@@ -14,6 +14,84 @@ namespace studyapp.Business.Services
             _context = context;
         }
 
+        public async Task<ResponseVM> Dashboard(int userId)
+        {
+            var totalTests = await _context.Tests
+       .Where(t => t.IsActive)
+       .CountAsync();
+
+            // 🔹 User test attempts
+            var userTests = await _context.UserTests
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+
+            var completedTests = userTests.Count;
+            var pendingTests = totalTests - completedTests;
+
+            // 🔹 Scores
+            var avgScore = completedTests == 0 ? 0 :
+                (int)userTests.Average(x => x.Score);
+
+            var bestScore = completedTests == 0 ? 0 :
+                userTests.Max(x => x.Score);
+
+            // 🔹 Total questions attempted
+            var totalQuestionsAttempted = userTests.Sum(x => x.TotalQuestions);
+
+            // 🔹 Accuracy %
+            var totalCorrect = userTests.Sum(x => x.Score);
+
+            var accuracy = totalQuestionsAttempted == 0 ? 0 :
+                (int)((double)totalCorrect / totalQuestionsAttempted * 100);
+
+            // 🔹 Recent 5 attempts
+            var recentTests = await _context.UserTests
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.CompletedAt)
+                .Take(5)
+                .Select(x => new
+                {
+                    x.TestId,
+                    TestName = x.Test.Title,
+                    x.Score,
+                    x.TotalQuestions,
+                    x.CompletedAt
+                })
+                .ToListAsync();
+
+            // 🔹 Course-wise performance (🔥 premium feature)
+            var courseStats = await _context.UserTests
+                .Where(x => x.UserId == userId)
+                .GroupBy(x => x.Test.Course.Name)
+                .Select(g => new
+                {
+                    courseName = g.Key,
+                    tests = g.Count(),
+                    avgScore = g.Average(x => x.Score)
+                })
+                .ToListAsync();
+
+            return new ResponseVM()
+            {
+                status = 1,
+                data = new
+                {
+                    totalTests,
+                    completedTests,
+                    pendingTests,
+
+                    avgScore,
+                    bestScore,
+
+                    totalQuestionsAttempted,
+                    accuracy,
+
+                    recentTests,
+                    courseStats
+                }
+            };
+        }
+
         public async Task<ResponseVM> GetAllTest(int userId)
         {
             var result = await _context.Tests

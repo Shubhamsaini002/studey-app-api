@@ -57,5 +57,20 @@ namespace studyapp.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetDashboard")]
+        public async Task<IActionResult> GetDashboard(int userId)
+        {
+            try
+            {
+                var result = await _testService.Dashboard(userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }
