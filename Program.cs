@@ -42,6 +42,7 @@ builder.Services.AddScoped<ISendMail, SendMail>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<ICourseService, CourseService>();
 builder.Services.AddScoped<ITestsService, TestsService>();
+builder.Services.AddScoped<IJobsservices, JobsService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

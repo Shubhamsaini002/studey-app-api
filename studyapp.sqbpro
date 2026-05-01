@@ -1,27 +1,24 @@
-<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="studyapp.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2849"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Courses" custom_title="0" dock_id="1" table="4,7:mainCourses"/><dock_state state="000000ff00000000fd00000001000000020000033b00000226fc0100000001fb000000160064006f0063006b00420072006f007700730065003101000000000000033b0000011800ffffff000002580000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Courses" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_" freeze_columns="0"><sort/><column_widths><column index="1" value="29"/><column index="2" value="62"/><column index="3" value="241"/><column index="4" value="54"/><column index="5" value="156"/><column index="6" value="218"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="SQL 1*">-- Insert sample tests
-INSERT INTO Tests (CourseId, Title, Description, TotalQuestions, DurationMinutes, IsActive, CreatedAt)
-VALUES 
-(1, 'C# Fundamentals Quiz', 'Test your knowledge of C# basics including variables, data types, and control structures', 3, 30, 1, datetime('now')),
-(1, 'Advanced C# Concepts', 'Challenge yourself with advanced topics like LINQ, delegates, and async programming', 3, 45, 1, datetime('now')),
-(2, 'SQL Basics Assessment', 'Evaluate your understanding of SQL queries, joins, and database design', 3, 25, 1, datetime('now'));
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="studyapp.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="2849"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><table title="Courses" custom_title="0" dock_id="1" table="4,7:mainCourses"/><dock_state state="000000ff00000000fd00000001000000020000000000000000fc0100000001fb000000160064006f0063006b00420072006f00770073006500310100000000ffffffff0000011800ffffff000000000000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">INSERT INTO Jobs (
+    Type, CompanyName, CompanyLogo, RecruiterName,
+    RecruiterEmail, RecruiterNumber, Country, City,
+    Technology, Role, Description, Link, Status, CreatedAt
+) VALUES
+('Recruiter', 'Google', 'google.png', 'John Doe', 'john@gmail.com', '9876543210', 'India', 'Delhi', 'Angular', 'Frontend Developer', 'Build UI apps', 'https://google.com', 1, datetime('now')),
 
--- Insert questions for Test 1 (C# Fundamentals Quiz)
-INSERT INTO TestQuestions (TestId, QuestionText, OptionA, OptionB, OptionC, OptionD, CorrectAnswer, CreatedAt)
-VALUES 
-(1, 'What is the correct way to declare a variable in C#?', 'var name = &quot;John&quot;;', 'string name = &quot;John&quot;;', 'name string = &quot;John&quot;;', 'declare string name = &quot;John&quot;;', 'B', datetime('now')),
-(1, 'Which of the following is a value type in C#?', 'string', 'class', 'int', 'array', 'C', datetime('now')),
-(1, 'What does the &quot;async&quot; keyword do?', 'Makes a method run synchronously', 'Allows a method to use await', 'Creates a new thread automatically', 'Makes a method private', 'B', datetime('now'));
+('Job', 'Microsoft', 'ms.png', 'Jane Smith', 'jane@outlook.com', '9123456780', 'India', 'Bangalore', 'C#', 'Backend Developer', 'Work on APIs', 'https://microsoft.com', 1, datetime('now')),
 
--- Insert questions for Test 2 (Advanced C# Concepts)
-INSERT INTO TestQuestions (TestId, QuestionText, OptionA, OptionB, OptionC, OptionD, CorrectAnswer, CreatedAt)
-VALUES 
-(2, 'What is the purpose of LINQ?', 'To handle exceptions', 'To query data from different sources', 'To create user interfaces', 'To manage memory', 'B', datetime('now')),
-(2, 'Which keyword is used to handle exceptions in C#?', 'catch', 'error', 'exception', 'throw', 'A', datetime('now')),
-(2, 'What does the &quot;yield&quot; keyword do?', 'Stops method execution', 'Returns multiple values lazily', 'Creates a loop', 'Throws an exception', 'B', datetime('now'));
+('Recruiter', 'Amazon', 'amazon.png', 'Rahul Sharma', 'rahul@gmail.com', '9988776655', 'India', 'Hyderabad', 'Java', 'Full Stack Developer', 'E-commerce platform', 'https://amazon.com', 1, datetime('now')),
 
--- Insert questions for Test 3 (SQL Basics Assessment)
-INSERT INTO TestQuestions (TestId, QuestionText, OptionA, OptionB, OptionC, OptionD, CorrectAnswer, CreatedAt)
-VALUES 
-(3, 'Which SQL statement is used to extract data from a database?', 'GET', 'EXTRACT', 'SELECT', 'OPEN', 'C', datetime('now')),
-(3, 'What does the WHERE clause do?', 'Filters records', 'Groups records', 'Sorts records', 'Joins tables', 'A', datetime('now')),
-(3, 'Which JOIN returns all records from the left table?', 'INNER JOIN', 'RIGHT JOIN', 'FULL JOIN', 'LEFT JOIN', 'D', datetime('now'));</sql><current_tab id="0"/></tab_sql></sqlb_project>
+('Job', 'Infosys', 'infosys.png', 'Priya Verma', 'priya@gmail.com', '9090909090', 'India', 'Pune', 'React', 'Frontend Engineer', 'UI development', 'https://infosys.com', 1, datetime('now')),
+
+('Recruiter', 'TCS', 'tcs.png', 'Amit Kumar', 'amit@gmail.com', '8888888888', 'India', 'Noida', 'Angular', 'UI Developer', 'Client projects', 'https://tcs.com', 1, datetime('now')),
+
+('Job', 'Wipro', 'wipro.png', 'Neha Singh', 'neha@gmail.com', '7777777777', 'India', 'Chennai', 'Python', 'Data Engineer', 'Data pipelines', 'https://wipro.com', 1, datetime('now')),
+
+('Recruiter', 'HCL', 'hcl.png', 'Vikas Gupta', 'vikas@gmail.com', '6666666666', 'India', 'Gurgaon', '.NET', 'Software Engineer', 'Enterprise apps', 'https://hcl.com', 1, datetime('now')),
+
+('Job', 'Capgemini', 'cap.png', 'Sneha Kapoor', 'sneha@gmail.com', '9555555555', 'India', 'Mumbai', 'Node.js', 'Backend Engineer', 'Microservices', 'https://capgemini.com', 1, datetime('now')),
+
+('Recruiter', 'Accenture', 'accenture.png', 'Rohit Mehta', 'rohit@gmail.com', '9444444444', 'India', 'Delhi', 'Azure', 'Cloud Engineer', 'Cloud solutions', 'https://accenture.com', 1, datetime('now')),
+
+('Job', 'IBM', 'ibm.png', 'Anjali Jain', 'anjali@gmail.com', '9333333333', 'India', 'Kolkata', 'AI/ML', 'ML Engineer', 'AI models', 'https://ibm.com', 1, datetime('now'));</sql><current_tab id="0"/></tab_sql></sqlb_project>

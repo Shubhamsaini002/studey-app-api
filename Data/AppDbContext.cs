@@ -16,6 +16,7 @@ namespace studyapp.Data
         public DbSet<TestQuestion> TestQuestions { get; set; }
         public DbSet<UserTest> UserTests { get; set; }
         public DbSet<UserAnswer> UserAnswers { get; set; }
+        public DbSet<Jobs> Jobs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // 🔥 Unique constraint (VERY IMPORTANT)
