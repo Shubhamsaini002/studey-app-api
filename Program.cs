@@ -46,7 +46,7 @@ builder.Services.AddScoped<IJobsservices, JobsService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddHttpClient();
 var app = builder.Build();
 
 // CORS
