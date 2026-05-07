@@ -82,7 +82,7 @@ namespace studyapp.Controllers
         //}
 
         [HttpPost("insertquestions")]
-        public async Task<IActionResult> insertquestions(InsertQuestion data)
+        public async Task<IActionResult> insertquestions(InsertQuestionsBulkData data)
         {
             var result = await _courseService.insertquestions(data);
 

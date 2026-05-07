@@ -10,7 +10,7 @@ namespace studyapp.Business.IServices
         Task<ResponseVM> MarkAsRead(int userId, int questionId);
         Task<ResponseVM> SaveQuestion(int userId, int questionId);
 
-        Task<ResponseVM> insertquestions(InsertQuestion data);
+        Task<ResponseVM> insertquestions(InsertQuestionsBulkData data);
 
     }
 }

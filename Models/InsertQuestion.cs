@@ -12,4 +12,9 @@ namespace studyapp.Models
         public string AnswerText { get; set; }
 
     }
+
+    public class InsertQuestionsBulkData
+    {
+        public List<InsertQuestion> Questions { get; set; }
+    }
 }

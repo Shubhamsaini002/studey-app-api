@@ -144,29 +144,36 @@ namespace studyapp.Business.Services
             };
         }
 
-        public async Task<ResponseVM> insertquestions(InsertQuestion data)
+        public async Task<ResponseVM> insertquestions(InsertQuestionsBulkData data)
         {
-            Question record = new Question()
-            {
-                CourseId = data.CourseId,
-                QuestionText = data.QuestionText,
-                AnswerText = data.AnswerText,
-                IsActive = true,
-                CreatedAt = DateTime.UtcNow,
-                Level = data.Level,
-            };
-
             try
             {
-                _context.Questions.Add(record);
+                var questions = new List<Question>();
+               
+                    foreach (var item in data.Questions)
+                    {
+                        questions.Add(new Question()
+                        {
+                            CourseId = item.CourseId,
+                            QuestionText = item.QuestionText,
+                            AnswerText = item.AnswerText,
+                            IsActive = true,
+                            CreatedAt = DateTime.UtcNow,
+                            Level = item.Level,
+                        });
+                    }
+                
+                await _context.Questions.AddRangeAsync(questions);
                 await _context.SaveChangesAsync();
+
                 return new ResponseVM()
                 {
                     status = 1,
-                    Message = "added.."
+                    Message = $"{questions.Count} questions added successfully."
                 };
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 return new ResponseVM()
                 {
                     status = 0,
