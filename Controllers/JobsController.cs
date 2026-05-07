@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using studyapp.Business.IServices;
-using studyapp.Business.Services;
-using System.Globalization;
-using System.Text.Json;
 
 namespace studyapp.Controllers
 {

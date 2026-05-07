@@ -13,9 +13,45 @@ namespace studyapp.Business.Services
         {
             _context = context;
         }
-        public async Task<ResponseVM> getCourses()
+        public async Task<ResponseVM> getCourses(int userId)
         {
-            var result = await _context.Courses.ToListAsync();
+            var result = await _context.Courses
+       .Select(course => new
+       {
+           course.Id,
+           course.Name,
+           course.Description,
+           course.Image,
+
+           IsSubscribed = _context.UserCourseSubscription
+               .Any(sub =>
+                   sub.UserId == userId &&
+                   sub.CourseId == course.Id &&
+                   sub.IsActive),
+
+           TotalQuestions = _context.Questions
+               .Count(q => q.CourseId == course.Id),
+
+           ReadQuestions = (
+               from qs in _context.UserQuestionStatuses
+               join q in _context.Questions
+                   on qs.QuestionId equals q.Id
+               where qs.UserId == userId
+                     && qs.IsRead
+                     && q.CourseId == course.Id
+               select qs.Id
+           ).Count()
+       })
+
+       // SUBSCRIBED COURSES FIRST
+       .OrderByDescending(x => x.IsSubscribed)
+
+       // THEN LATEST COURSES
+       .ThenByDescending(x => x.Id)
+
+       .ToListAsync();
+
+
             return new ResponseVM
             {
                 status = 1,
@@ -143,5 +179,68 @@ namespace studyapp.Business.Services
             }
         }
 
+        public async Task<ResponseVM> sescribecourses(int userId, int courseId)
+        {
+            var courseExists = await _context.Courses
+       .AnyAsync(x => x.Id == courseId);
+
+            if (!courseExists)
+            {
+                return new ResponseVM
+                {
+                    status = 0,
+                    Message = "Course not found"
+                };
+            }
+
+            var alreadySubscribed = await _context.UserCourseSubscription
+                .FirstOrDefaultAsync(x =>
+                    x.UserId == userId &&
+                    x.CourseId == courseId);
+
+            // If already subscribed and active
+            if (alreadySubscribed != null && alreadySubscribed.IsActive)
+            {
+                return new ResponseVM
+                {
+                    status = 0,
+                    Message = "Already subscribed"
+                };
+            }
+
+            // If exists but inactive -> reactivate
+            if (alreadySubscribed != null)
+            {
+                alreadySubscribed.IsActive = true;
+                alreadySubscribed.SubscribedAt = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync();
+
+                return new ResponseVM
+                {
+                    status = 1,
+                    Message = "Course subscribed successfully"
+                };
+            }
+
+            // New subscription
+            var subscription = new UserCourseSubscription
+            {
+                UserId = userId,
+                CourseId = courseId,
+                IsActive = true,
+                SubscribedAt = DateTime.UtcNow
+            };
+
+            _context.UserCourseSubscription.Add(subscription);
+
+            await _context.SaveChangesAsync();
+
+            return new ResponseVM
+            {
+                status = 1,
+                Message = "Course subscribed successfully"
+            };
+        }
     }
 }

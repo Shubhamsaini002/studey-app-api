@@ -16,9 +16,16 @@ namespace studyapp.Controllers
         }
 
         [HttpGet("getcourses")]
-        public async Task<IActionResult> GetCourses()
+        public async Task<IActionResult> GetCourses(int userId)
         {
-            var result = await _courseService.getCourses();
+            var result = await _courseService.getCourses(userId);
+            return Ok(result);
+        }
+
+        [HttpGet("sescribecourses")]
+        public async Task<IActionResult> sescribecourses(int userId,int courseId)
+        {
+            var result = await _courseService.sescribecourses(userId, courseId);
             return Ok(result);
         }
 
