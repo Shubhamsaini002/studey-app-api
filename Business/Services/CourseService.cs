@@ -45,10 +45,6 @@ namespace studyapp.Business.Services
 
        // SUBSCRIBED COURSES FIRST
        .OrderByDescending(x => x.IsSubscribed)
-
-       // THEN LATEST COURSES
-       .ThenByDescending(x => x.Id)
-
        .ToListAsync();
 
 
